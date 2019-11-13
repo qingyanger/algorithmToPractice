@@ -1,51 +1,57 @@
 package javaGuide;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
 /**
  * @author cuichenyang
- * @Description 寻找两个有序数组的中位数
- * @date 2019/10/12 9:54
+ * @Description
+ * @date 2019/10/15 14:11
  * @Copyright
  */
 public class test02
 {
     public static void main(String[] args)
     {
-        int[] nums1 = new int[]{1, 3, 2, 5, 4, 1, 4, 8};
-        int[] nums2 = new int[]{2, 5, 4, 7, 1, 6};
-        double num = findMedianSortedArrays(nums1, nums2);
-        System.out.println(num);
+
+
     }
 
-    public static double findMedianSortedArrays(int[] nums1, int[] nums2)
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2)
     {
-        if (Objects.nonNull(nums1) && Objects.nonNull(nums2))
+        ListNode dummyHead = new ListNode(0);
+        ListNode p = l1, q = l2, curr = dummyHead;
+        int carry = 0;
+        while (p != null || q != null)
         {
-            ArrayList<Integer> list = new ArrayList<>();
-            for (int i : nums1)
+            int x = (p != null) ? p.val : 0;
+            int y = (q != null) ? q.val : 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            curr.next = new ListNode(sum % 10);
+            curr = curr.next;
+            if (p != null)
             {
-                list.add(i);
+                p = p.next;
             }
-            for (int i : nums2)
+            if (q != null)
             {
-                list.add(i);
+                q = q.next;
             }
-            List<Integer> collect = list.stream().sorted().collect(Collectors.toList());
-            System.out.println(collect);
-            int size = collect.size();
-            if (size % 2 == 0)
-            {
-                int i = size / 2;
-                double num = (double) (collect.get(i) + collect.get(i - 1)) / 2;
-                return num;
-            }
-            double num = collect.get(size / 2);
-            return num;
         }
-        return 0.0;
+        if (carry > 0)
+        {
+            curr.next = new ListNode(carry);
+        }
+        return dummyHead.next;
     }
 
+    public static class ListNode
+    {
+        int val;
+        ListNode next;
 
+        ListNode(int x)
+        {
+            val = x;
+        }
+
+    }
 }
